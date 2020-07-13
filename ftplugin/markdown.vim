@@ -50,20 +50,31 @@ endfunction
 " search procedure can be changed.
 function s:GetNextHeader(level, ...)
   let l:direction = get(a:, 2, '')
-  echo l:direction
-  let l:position = searchpos(get(s:level_to_regex, a:level), 'nW') 
+  let l:position = searchpos(get(s:level_to_regex, a:level), 'nW' . l:direction) 
 
   " Only interested in the line number, not in the column
   return l:position[0]
 endfunction
 
+" Moves the cursor to the *first* sibling header, i.e. the first header
+" of the same level as under the cursor. Does not 'jump' across section
+" headers.
+function MoveToFirstSiblingHeader()
+  let l:level = s:GetCurrentLevel()
+  let l:prev_parent = s:GetNextHeader(l:level - 1, 'b')
+
+  while search(get(s:level_to_regex, l:level), 'Wb', l:prev_parent) != 0
+    " Nothing to do here in the body of the loop.
+  endwhile
+endfunction
+
 " Moves the cursor to the *last* sibling header, i.e. the last header of
-" the same level as under the cursor.
+" the same level as under the cursor. Does not 'jump' across sections.
 function MoveToLastSiblingHeader()
   let l:level = s:GetCurrentLevel()
-  let l:next_sibling = s:GetNextHeader(l:level - 1)
+  let l:next_parent = s:GetNextHeader(l:level - 1)
 
-  while search(get(s:level_to_regex, l:level), 'W', l:next_sibling) != 0
+  while search(get(s:level_to_regex, l:level), 'W', l:next_parent) != 0
     " Nothing to do here in the body of the loop.
   endwhile
 endfunction
