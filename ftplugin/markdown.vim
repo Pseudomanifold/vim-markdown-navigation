@@ -29,7 +29,7 @@ let s:all_headers_regex = '\v^(#|.+\n(\=+|-+)$)'
 " valid header.
 "
 " Based on a similar function from: https://github.com/plasticboy/vim-markdown
-function GetCurrentLevel()
+function s:GetCurrentLevel()
   let l:l = line('.')
   while(l:l > 0)
     " Check which level matches the line and return it. 
@@ -47,7 +47,7 @@ endfunction
 
 " Returns the line number of the *next* header of a given level. If no
 " such header line number exists, returns zero.
-function GetNextHeader(level)
+function s:GetNextHeader(level)
     let l:position = searchpos(get(s:level_to_regex, a:level), 'nW') 
 
     " Only interested in the line number, not in the column
