@@ -46,19 +46,22 @@ function s:GetCurrentLevel()
 endfunction
 
 " Returns the line number of the *next* header of a given level. If no
-" such header line number exists, returns zero.
-function s:GetNextHeader(level)
-    let l:position = searchpos(get(s:level_to_regex, a:level), 'nW') 
+" such header line number exists, returns zero. The *direction* of the
+" search procedure can be changed.
+function s:GetNextHeader(level, ...)
+  let l:direction = get(a:, 2, '')
+  echo l:direction
+  let l:position = searchpos(get(s:level_to_regex, a:level), 'nW') 
 
-    " Only interested in the line number, not in the column
-    return l:position[0]
+  " Only interested in the line number, not in the column
+  return l:position[0]
 endfunction
 
 " Moves the cursor to the *last* sibling header, i.e. the last header of
 " the same level as under the cursor.
 function MoveToLastSiblingHeader()
-  let l:level = GetCurrentLevel()
-  let l:next_sibling = GetNextHeader(l:level - 1)
+  let l:level = s:GetCurrentLevel()
+  let l:next_sibling = s:GetNextHeader(l:level - 1)
 
   while search(get(s:level_to_regex, l:level), 'W', l:next_sibling) != 0
     " Nothing to do here in the body of the loop.
