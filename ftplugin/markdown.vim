@@ -66,6 +66,16 @@ function MoveToNextSiblingHeader()
   search(get(s:level_to_regex, l:level), 'W', l:next_parent)
 endfunction
 
+" Moves the cursor to the *previous* sibling header, i.e. the previous
+" header of the same level as the text under the cursor. This function
+" does not 'jump' across other section headers.
+function MoveToPreviousSiblingHeader()
+  let l:level = s:GetCurrentLevel()
+  let l:prev_parent = s:GetNextHeader(l:level - 1, 'b')
+
+  search(get(s:level_to_regex, l:level), 'Wb', l:prev_parent)
+endfunction
+
 " Moves the cursor to the *first* sibling header, i.e. the first header
 " of the same level as the text under the cursor. This function doesn't
 " jump 'over' other section headers.
@@ -78,22 +88,14 @@ function MoveToFirstSiblingHeader()
   endwhile
 endfunction
 
-" Moves the cursor to the *next* sibling header, i.e. the next header of
+" Moves the cursor to the *last* sibling header, i.e. the last header of
 " the same level as the text under the cursor. Again, this function does
-" not jump 'over' other section headers.
-function MoveToNextSiblingHeader()
+" not 'jump' across other section headers.
+function MoveToLastSiblingHeader()
   let l:level = s:GetCurrentLevel()
   let l:next_parent = s:GetNextHeader(l:level - 1)
 
-  search(get(s:level_to_regex, l:level), 'W', l:next_parent)
-endfunction
-
-" Moves the cursor to the *previous* sibling header, i.e. the previous
-" header of the same level as the text under the cursor. This function
-" not 'jump' across other section headers.
-function MoveToPreviousSiblingHeader()
-  let l:level = s:GetCurrentLevel()
-  let l:prev_parent = s:GetNextHeader(l:level - 1, 'b')
-
-  search(get(s:level_to_regex, l:level), 'Wb', l:prev_parent)
+  while search(get(s:level_to_regex, l:level), 'W', l:next_parent) != 0
+    " Nothing to do here in the body of the loop.
+  endwhile
 endfunction
