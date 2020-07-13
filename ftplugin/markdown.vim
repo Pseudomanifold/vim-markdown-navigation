@@ -49,7 +49,7 @@ endfunction
 " such header line number exists, returns zero. The *direction* of the
 " search procedure can be changed.
 function s:GetNextHeader(level, ...)
-  let l:direction = get(a:, 2, '')
+  let l:direction = get(a:, 1, '')
   let l:position = searchpos(get(s:level_to_regex, a:level), 'nW' . l:direction) 
 
   " Only interested in the line number, not in the column
