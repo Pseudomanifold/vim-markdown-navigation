@@ -102,5 +102,7 @@ endfunction
 
 if !exists('g:no_plugin_maps')
   nnoremap [g :call MoveToFirstSiblingHeader()<cr>
+  nnoremap [[ :call MoveToPreviousSiblingHeader()<cr>
+  nnoremap ]] :call MoveToNextSiblingHeader()<cr>
   nnoremap ]g :call MoveToLastSiblingHeader()<cr>
 endif
