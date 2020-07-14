@@ -59,6 +59,7 @@ function s:GetNextHeader(level, ...)
       return 0
     else
       return line('$')
+    endif
   else
     let l:position = searchpos(get(s:level_to_regex, a:level), 'nW' . l:direction) 
 
