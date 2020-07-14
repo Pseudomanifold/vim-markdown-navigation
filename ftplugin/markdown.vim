@@ -54,7 +54,7 @@ function s:GetNextHeader(level, ...)
   " We are looking for a header of a non-existent level, so we either
   " return the last line *or* the first line, depending on the search
   " direction.
-  if level == 0
+  if a:level == 0
     if l:direction == 'b'
       return 0
     else
