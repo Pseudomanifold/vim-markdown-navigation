@@ -75,7 +75,7 @@ function MoveToNextSiblingHeader()
   let l:level = s:GetCurrentLevel()
   let l:next_parent = s:GetNextHeader(l:level - 1)
 
-  search(get(s:level_to_regex, l:level), 'W', l:next_parent)
+  call search(get(s:level_to_regex, l:level), 'W', l:next_parent)
 endfunction
 
 " Moves the cursor to the *previous* sibling header, i.e. the previous
@@ -85,7 +85,7 @@ function MoveToPreviousSiblingHeader()
   let l:level = s:GetCurrentLevel()
   let l:prev_parent = s:GetNextHeader(l:level - 1, 'b')
 
-  search(get(s:level_to_regex, l:level), 'Wb', l:prev_parent)
+  call search(get(s:level_to_regex, l:level), 'Wb', l:prev_parent)
 endfunction
 
 " Moves the cursor to the *first* sibling header, i.e. the first header
