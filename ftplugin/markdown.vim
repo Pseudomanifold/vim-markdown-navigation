@@ -50,10 +50,21 @@ endfunction
 " search procedure can be changed.
 function s:GetNextHeader(level, ...)
   let l:direction = get(a:, 1, '')
-  let l:position = searchpos(get(s:level_to_regex, a:level), 'nW' . l:direction) 
 
-  " Only interested in the line number, not in the column
-  return l:position[0]
+  " We are looking for a header of a non-existent level, so we either
+  " return the last line *or* the first line, depending on the search
+  " direction.
+  if level == 0
+    if l:direction == 'b'
+      return 0
+    else
+      return line('$')
+  else
+    let l:position = searchpos(get(s:level_to_regex, a:level), 'nW' . l:direction) 
+
+    " Only interested in the line number, not in the column
+    return l:position[0]
+  endif
 endfunction
 
 " Moves the cursor to the *next* sibling header, i.e. the next header of
