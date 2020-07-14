@@ -99,3 +99,8 @@ function MoveToLastSiblingHeader()
     " Nothing to do here in the body of the loop.
   endwhile
 endfunction
+
+if !exists('g:no_plugin_maps')
+  nnoremap [g :call MoveToFirstSiblingHeader()<cr>
+  nnoremap [G :call MoveToLastSiblingHeader()<cr>
+endif
