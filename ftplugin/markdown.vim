@@ -34,7 +34,7 @@ function s:GetCurrentLevel()
   while(l:l > 0)
     " Check which level matches the line and return it. 
     for l:key in keys(s:level_to_regex)
-      if join(getline(l:l, l:l + 1), '\n') =~ get(s:level_to_regex, l:key)
+      if join(getline(l:l, l:l + 1), "\n") =~ get(s:level_to_regex, l:key)
         return l:key
       endif
     endfor
